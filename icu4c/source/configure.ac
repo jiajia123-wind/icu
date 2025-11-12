@@ -1103,6 +1103,21 @@ If set, it will REPLACE any automatic list of libraries.],
 		*) AC_MSG_ERROR(bad value ${enableval} for --enable-samples) ;;
 		esac],
 	samples=true)
+
+# Enable Automake-compatible ptest output format (for Yocto/OpenEmbedded)
+AC_ARG_ENABLE([ptest-automake-format],
+    AS_HELP_STRING([--enable-ptest-automake-format],
+                   [Emit ptest output in Automake format (PASS:/FAIL:) for Yocto ptest]),
+    [
+        if test "x$enableval" = "xyes"; then
+            UCONFIG_CPPFLAGS="${UCONFIG_CPPFLAGS} -DU_PTEST_AUTOMAKE_FORMAT=1"
+            AC_MSG_RESULT([enabling Automake ptest format])
+        else
+            AC_MSG_RESULT([disabling Automake ptest format])
+        fi
+    ],
+    [enable_ptest_automake_format=no])
+
 ICU_CONDITIONAL(SAMPLES, test "$samples" = true)
 
 ICUDATA_CHAR=$U_ENDIAN_CHAR
@@ -1366,3 +1381,5 @@ then
 fi
 
 $as_unset _CXX_CXXSUFFIX
+
+
